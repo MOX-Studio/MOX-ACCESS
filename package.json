@@ -1,6 +1,6 @@
 {
   "name": "mox-access-prototype",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "private": true,
   "description": "Interactive prototype of employee access and key management for MOX Studio",

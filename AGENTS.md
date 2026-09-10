@@ -15,3 +15,4 @@
 - Multi-subscription authorization and routing are simulated; the desktop protocol probe alone does not verify real Pro subscription pooling.
 - Browser login is a clearly labeled fixture in this prototype. Future real login must be confirmed by the server, with stable account/workspace validation; never trust popup completion as authorization.
 - Usage is per employee across all connections. Use Moscow calendar day/week/month, count each request once, and keep unknown counts distinct from zero. Key revocation must preserve usage history.
+- Record requestedMode and effectiveMode per request. Group Fast usage only by effectiveMode; missing confirmation belongs to a separate unknown group. Never multiply token counts by billing or credit factors. Mode changes and key revocation must not reclassify historical requests.
