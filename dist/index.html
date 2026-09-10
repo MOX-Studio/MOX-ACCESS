@@ -29,6 +29,9 @@
       .table-toolbar{padding:12px 23px}th{padding:11px 24px}td{height:50px;padding:7px 24px}.avatar{width:32px;height:32px}.person-name{margin-bottom:3px}.table-footer{padding:11px 24px}
       .bottom-note{margin-top:14px}.bottom-note button{display:inline-flex;align-items:center;gap:5px}
     }
+    .scope-link{display:inline-flex;align-items:center;gap:6px;padding:6px 8px;border-radius:5px;font-size:13px;color:#4b65ab;text-align:left}.scope-link:hover{background:#f0f3fd}.scope-link svg{width:13px;height:13px}.scope-empty{color:#a58259}
+    .connection-list{display:flex;flex-direction:column;gap:14px}.connection-card{display:grid;grid-template-columns:1.35fr 1fr 1fr auto;align-items:center;gap:28px;border:1px solid var(--border);border-radius:11px;background:#fff;padding:23px 26px;min-height:111px}.connection-identity{display:flex;gap:14px;align-items:center}.connection-identity .provider-icon{height:43px;width:43px;background:#eef2fc;color:#657db8}.connection-title{font-size:16px;font-weight:580;margin-bottom:7px}.connection-email{font-size:13px;color:#8b94a3}.connection-label{font-size:12px;color:#939baa;margin-bottom:8px}.connection-actions{display:flex;gap:8px}.status-warning{background:#fff4de;color:#a07529}.connection-footer{font-size:13px;line-height:1.7;color:#8d96a4;margin-top:23px;max-width:850px}.connection-stats{display:flex;gap:35px;margin-bottom:25px}.connection-stats div{display:flex;gap:10px;align-items:baseline;font-size:13px;color:#939dab}.connection-stats strong{font-size:25px;color:#394355;font-weight:600}
+    .scope-options{border:1px solid var(--border);border-radius:8px;overflow:hidden}.scope-option{display:flex;align-items:center;gap:11px;padding:14px 15px;border-bottom:1px solid var(--border);cursor:pointer}.scope-option:last-child{border-bottom:0}.scope-option input{accent-color:var(--blue);width:16px;height:16px;flex:none}.scope-option strong{display:block;font-size:14px;font-weight:540}.scope-option small{display:block;font-size:12px;color:#8e98a7;margin-top:5px}.scope-option .status{margin-left:auto}.field select{width:100%;height:43px;border:1px solid #dce1e9;border-radius:6px;background:#fff;padding:8px 12px;color:#4c596d;font-size:14px}.demo-controls{margin-top:22px;border-top:1px solid var(--border);padding-top:15px;font-size:13px;color:#8490a0}.demo-controls summary{cursor:pointer}.demo-control-buttons{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.routing-panel{border-top:1px solid var(--border);padding-top:23px;margin-top:25px}.routing-panel h3{font-size:16px;font-weight:550;margin:0 0 9px}.routing-panel p{font-size:13px;margin-bottom:17px}.route-result{background:#f5f7fc;border:1px solid #e2e7f2;padding:17px;border-radius:8px;font-size:13px;line-height:1.7;color:#77839a;margin-top:17px}.route-result strong{color:#435778;font-weight:580}.route-result.blocked{background:#fff9ef;border-color:#ede2cd}.route-result.blocked strong{color:#9c763d}.connection-help{display:flex;gap:9px;align-items:center;color:#7c889b;font-size:13px;margin-top:20px}.connection-help svg{width:16px;height:16px}
   </style>
 </head>
 <body>
@@ -38,6 +41,7 @@
     <div class="nav-label">УПРАВЛЕНИЕ</div>
     <nav>
       <button class="nav-btn active" data-view="employees" aria-current="page"><span data-icon="users"></span>Сотрудники<span class="nav-count" id="nav-count">10</span></button>
+      <button class="nav-btn" data-view="subscriptions"><span data-icon="layers"></span>Подписки<span class="nav-count" id="nav-subscriptions">2</span></button>
       <button class="nav-btn" data-view="codex"><span data-icon="terminal"></span>Подключение Codex</button>
       <button class="nav-btn" data-view="activity"><span data-icon="activity"></span>История действий</button>
       <button class="nav-btn" data-view="check"><span data-icon="shield"></span>Проверка ключа</button>
@@ -56,29 +60,36 @@
     <main>
       <section id="employees-view">
         <div class="page-heading">
-          <div><div class="heading-copy"><h1>Доступы сотрудников</h1><span class="count-pill" id="heading-count">10</span></div><p>Выдавайте и отзывайте персональные ключи к подписке компании.</p></div>
+          <div><div class="heading-copy"><h1>Доступы сотрудников</h1><span class="count-pill" id="heading-count">10</span></div><p>Один личный ключ MOX — доступ к разрешённым подпискам окружения.</p></div>
           <button class="btn btn-primary" data-action="add"><span data-icon="plus"></span>Добавить сотрудника</button>
         </div>
-        <section class="subscription" aria-label="Подписка компании">
-          <div class="provider"><div class="provider-icon"><span data-icon="terminal"></span></div><div><div class="eyebrow">Подписка компании</div><div class="provider-title"><strong>Codex Pro</strong><span class="status status-active">Подключена · демо</span></div></div></div>
-          <div class="subscription-details"><div class="subscription-item"><div class="eyebrow">Стоимость</div><strong>$200 <span>/ месяц</span></strong></div><div class="subscription-item"><div class="eyebrow">Сотрудники с доступом</div><strong><b id="active-count">6</b> <span>из <b id="total-count">10</b></span></strong></div><div class="subscription-item"><div class="eyebrow">Владелец подписки</div><strong>admin@example.com</strong></div></div>
-          <div class="subscription-note">Подключение к OpenAI<br>показано для демонстрации.</div>
+        <section class="subscription" aria-label="Окружение компании">
+          <div class="provider"><div class="provider-icon"><span data-icon="layers"></span></div><div><div class="eyebrow">Окружение компании</div><div class="provider-title"><strong>MOX Studio</strong><span class="status status-active">Демо</span></div></div></div>
+          <div class="subscription-details"><div class="subscription-item"><div class="eyebrow">Подписки</div><strong><b id="environment-total">2</b> <span>подключения</span></strong></div><div class="subscription-item"><div class="eyebrow">Готовы к запросам</div><strong><b id="environment-ready">2</b> <span>подписки</span></strong></div><div class="subscription-item"><div class="eyebrow">Активных ключей</div><strong><b id="active-count">6</b> <span>на <b id="total-count">10</b> сотрудников</span></strong></div></div>
+          <button class="btn btn-secondary btn-small" data-view="subscriptions">Управлять подписками</button>
         </section>
         <section class="table-panel" aria-label="Сотрудники и ключи">
           <div class="table-toolbar">
             <div class="filters" role="group" aria-label="Статус доступа">
               <button class="filter active" data-filter="all">Все<span class="filter-count" id="filter-all">10</span></button>
-              <button class="filter" data-filter="active">С доступом<span class="filter-count" id="filter-active">6</span></button>
+              <button class="filter" data-filter="active">Ключ активен<span class="filter-count" id="filter-active">6</span></button>
               <button class="filter" data-filter="none">Без ключа<span class="filter-count" id="filter-none">3</span></button>
               <button class="filter" data-filter="revoked">Отозван<span class="filter-count" id="filter-revoked">1</span></button>
             </div>
             <div class="search"><span data-icon="search"></span><input id="search" type="search" placeholder="Найти сотрудника" aria-label="Найти сотрудника" autocomplete="off"></div>
           </div>
-          <table aria-label="Список сотрудников"><thead><tr><th>Сотрудник</th><th>API-ключ</th><th>Статус доступа</th><th>Ключ выдан</th><th>Действие</th></tr></thead><tbody id="employee-rows"></tbody></table>
+          <table aria-label="Список сотрудников"><thead><tr><th>Сотрудник</th><th>API-ключ</th><th>Статус ключа</th><th>Доступные подписки</th><th>Действие</th></tr></thead><tbody id="employee-rows"></tbody></table>
           <div class="empty" id="empty-state" hidden><span data-icon="search"></span><h3>Сотрудники не найдены</h3><p>Измените запрос или выберите другой статус.</p></div>
           <div class="table-footer"><span id="table-summary">Показано 10 сотрудников</span><span><span data-icon="lock"></span>Полные ключи видны только при выдаче</span></div>
         </section>
         <div class="bottom-note"><span><span data-icon="info"></span>Авторизация OpenAI хранится у компании. Сотрудники получают личные ключи MOX.</span><button data-action="about">Как работает доступ <span aria-hidden="true">↗</span></button></div>
+      </section>
+      <section id="subscriptions-view" hidden>
+        <div class="page-heading"><div><div class="heading-copy"><h1>Подписки окружения</h1><span class="count-pill" id="subscriptions-count">2</span></div><p>Каждый аккаунт авторизуется отдельно. Ключи сотрудников остаются прежними.</p></div><button class="btn btn-primary" data-action="connect"><span data-icon="plus"></span>Подключить подписку</button></div>
+        <div class="connection-stats"><div><strong id="subscriptions-authorized">2</strong>авторизованы</div><div><strong id="subscriptions-ready">2</strong>готовы к запросам</div></div>
+        <div class="connection-list" id="connection-list"></div>
+        <div class="connection-footer">Новые чаты распределяются по очереди между разрешёнными доступными подписками. Начатый чат закрепляется за своей подпиской. При её недоступности дальнейшие запросы приостанавливаются.</div>
+        <div class="connection-help"><span data-icon="flask"></span>Вход в аккаунты и состояния подписок моделируются. Настоящая авторизация OpenAI не выполняется.</div>
       </section>
       <section id="codex-view" hidden>
         <div class="view-header"><h1>Подключение Codex</h1><p>Сотрудники продолжают работать в настольном Codex. MOX управляет их доступом.</p></div>
@@ -89,7 +100,7 @@
               <li><span class="step-number">2</span><div class="step-text"><strong>Настроить провайдер MOX</strong><span>В пользовательской конфигурации Codex задаются адрес шлюза и способ передачи личного ключа. Одного ввода ключа в стандартное поле OpenAI API key недостаточно.</span></div></li>
               <li><span class="step-number">3</span><div class="step-text"><strong>Работать в приложении Codex</strong><span>Запросы идут через MOX. После отзыва ключа сервер прекращает принимать новые запросы сотрудника.</span></div></li>
             </ol>
-            <div class="new-key-note">Адрес настоящего шлюза в прототипе ещё не настроен. Демо-ключи из этой панели проверяются только внутри страницы.</div>
+            <div class="new-key-note">У сотрудника один ключ для окружения MOX. Подписку для нового чата выбирает сервер из разрешённых ему подключений. Начатый чат сохраняет свою подписку.<br>Настоящий шлюз ещё не настроен. Демо-ключи проверяются только внутри страницы.</div>
             <details class="hidden-state"><summary>Технические настройки и документация</summary><p>Провайдер задаётся в пользовательском config.toml: model_provider, model_providers.mox.base_url, wire_api = &quot;responses&quot;, env_key = &quot;MOX_ACCESS_KEY&quot;, requires_openai_auth = false. Значение MOX_ACCESS_KEY должно быть доступно процессу настольного приложения. Обычный export в отдельном терминале не гарантирует этого для приложения, открытого из Dock.</p><p><a href="https://learn.chatgpt.com/docs/developer-settings#agent-configuration" target="_blank" rel="noopener noreferrer">Настройки настольного Codex ↗</a><br><a href="https://learn.chatgpt.com/docs/config-file/config-advanced#custom-model-providers" target="_blank" rel="noopener noreferrer">Подключение собственного провайдера ↗</a></p></details>
           </div>
           <div class="card"><span class="status status-active">Проверено в приложении</span><h2 style="margin-top:18px">Ключ работает в Codex</h2><p>Проверка в отдельном экземпляре настольного приложения.</p>
@@ -99,7 +110,7 @@
         </div>
       </section>
       <section id="activity-view" hidden>
-        <div class="view-header"><h1>История действий</h1><p>Выдача, отзыв и проверка ключей в текущей демо-сессии.</p></div>
+        <div class="view-header"><h1>История действий</h1><p>Ключи, подписки, права сотрудников и распределение запросов в текущей демо-сессии.</p></div>
         <div class="table-panel activity-panel" id="activity-list"></div>
       </section>
       <section id="check-view" hidden>
@@ -109,8 +120,9 @@
             <form id="check-form"><div class="field"><label for="check-key">API-ключ MOX</label><input id="check-key" name="key" type="password" placeholder="mox_demo_…" autocomplete="off" spellcheck="false" aria-describedby="check-help"><small id="check-help">Проверка выполняется в браузере. Запрос в OpenAI не отправляется.</small></div>
               <div class="card-footer"><button type="button" class="btn btn-text" data-action="toggle-key">Показать ключ</button><button type="submit" class="btn btn-primary"><span data-icon="shield"></span>Проверить локально</button></div>
             </form><div id="check-result" aria-live="polite"></div>
+            <div class="routing-panel" id="routing-panel" hidden><h3>Проверить выбор подписки</h3><p>Запрос моделируется внутри страницы. Ответ модели не запрашивается.</p><div class="field"><label for="chat-select">Чат сотрудника</label><select id="chat-select"><option value="">Новый чат</option></select></div><button class="btn btn-secondary" data-action="route-request"><span data-icon="layers"></span>Проверить запрос</button><div id="route-result" aria-live="polite"></div></div>
           </div>
-          <div class="card"><h2>Попробуйте полный сценарий</h2><ol class="steps"><li><span class="step-number">1</span><div class="step-text"><strong>Выдайте ключ</strong><span>Выберите сотрудника без доступа и скопируйте его новый ключ.</span></div></li><li><span class="step-number">2</span><div class="step-text"><strong>Проверьте доступ</strong><span>Вставьте ключ здесь. Проверка покажет, что доступ открыт.</span></div></li><li><span class="step-number">3</span><div class="step-text"><strong>Отзовите и проверьте снова</strong><span>Тот же ключ больше не пройдёт проверку. Новый ключ выдаётся отдельно.</span></div></li></ol></div>
+          <div class="card"><h2>Попробуйте полный сценарий</h2><ol class="steps"><li><span class="step-number">1</span><div class="step-text"><strong>Выдайте ключ</strong><span>Разрешите сотруднику одну или несколько подписок и скопируйте его ключ.</span></div></li><li><span class="step-number">2</span><div class="step-text"><strong>Начните два чата</strong><span>При двух доступных подписках новые чаты распределятся между ними.</span></div></li><li><span class="step-number">3</span><div class="step-text"><strong>Приостановите подписку</strong><span>Её начатый чат остановится. Новый чат сможет использовать другую разрешённую подписку.</span></div></li><li><span class="step-number">4</span><div class="step-text"><strong>Отзовите ключ</strong><span>Доступ сотрудника закроется сразу ко всем подпискам окружения.</span></div></li></ol></div>
         </div>
       </section>
     </main>
@@ -131,6 +143,7 @@
         chevron:'<path d="m9 6 6 6-6 6"/>',
         plus:'<path d="M12 5v14M5 12h14"/>',
         terminal:'<path d="m5 7 5 5-5 5M13 17h6"/>',
+        layers:'<path d="m12 3 9 5-9 5-9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/>',
         search:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/>',
         lock:'<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/>',
         key:'<circle cx="8" cy="8" r="5"/><path d="m11.5 11.5 9 9M17 17l3-3M14 14l3-3"/>',
@@ -160,8 +173,9 @@
         ['Никита Фёдоров','nikita.fedorov@example.com','none']
       ];
       // Model stores key fingerprints and hashes only. One active key per employee.
-      let state={employees:[],keys:[],events:[]};
-      let view='employees',filter='all',query='',revealedKey=null,busy=false,toastTimer=null,lastCheckedHash=null,checkGeneration=0;
+      const emptyState=()=>({employees:[],keys:[],events:[],connections:[],chats:[],routingCursors:{}});
+      let state=emptyState();
+      let view='employees',filter='all',query='',revealedKey=null,busy=false,toastTimer=null,lastCheckedHash=null,checkGeneration=0,pendingConnection=null,lastRoute=null;
       const modal=$('modal');
       const stamp=()=>new Date().toISOString();
       const dateLabel=iso=>new Date(iso).toLocaleDateString('ru-RU',{day:'2-digit',month:'short'});
@@ -173,6 +187,17 @@
       const counts=()=>state.employees.reduce((a,e)=>{a.all++;a[employeeState(e.id)]++;return a;},{all:0,active:0,none:0,revoked:0});
       const addEvent=(type,employeeId,detail='')=>state.events.unshift({id:crypto.randomUUID(),type,employeeId,detail,at:stamp()});
       const employeeById=id=>state.employees.find(e=>e.id===id);
+      const connectionById=id=>state.connections.find(c=>c.id===id);
+      const ready=c=>c.auth==='connected'&&c.enabled&&c.availability==='available';
+      const authorizedConnections=e=>state.connections.filter(c=>e.allowedConnectionIds.includes(c.id));
+      const eligibleConnections=e=>authorizedConnections(e).filter(ready);
+      const authLabels={connected:'Авторизована',requires_auth:'Требуется вход',disconnected:'Отключена'};
+      const availabilityLabels={available:'Готова к запросам',paused:'Приостановлена',quota:'Лимит исчерпан'};
+      const authBadge=c=>'<span class="status '+(c.auth==='connected'?'status-active':c.auth==='requires_auth'?'status-warning':'status-none')+'">'+authLabels[c.auth]+'</span>';
+      function availabilityBadge(c){
+        const label=!c.enabled?'Приостановлена':c.availability==='available'&&c.auth!=='connected'?'Нет подключения':availabilityLabels[c.availability];
+        return '<span class="status '+(ready(c)?'status-active':c.availability==='quota'?'status-warning':'status-none')+'">'+label+'</span>';
+      }
       function avatar(e){const color=palette[e.color%palette.length];return '<span class="avatar" style="background:'+color[0]+';color:'+color[1]+'">'+esc(initials(e.name))+'</span>';}
       function personCard(e){return '<div class="person-card">'+avatar(e)+'<div><span class="person-name">'+esc(e.name)+'</span><span class="person-email">'+esc(e.email)+'</span></div></div>';}
       function toast(message){clearTimeout(toastTimer);$('toast').innerHTML=icon('check')+'<span>'+esc(message)+'</span>';$('toast').hidden=false;toastTimer=setTimeout(()=>$('toast').hidden=true,3500);}
@@ -184,15 +209,15 @@
         const list=state.employees.filter(e=>(filter==='all'||employeeState(e.id)===filter)&&(!query||(e.name+' '+e.email).toLocaleLowerCase('ru').includes(query)));
         $('employee-rows').innerHTML=list.map(e=>{
           const key=latestKey(e.id),status=key?.status||'none',active=status==='active';
-          const label={active:'Доступ открыт',none:'Нет ключа',revoked:'Ключ отозван'}[status];
+          const label={active:'Ключ активен',none:'Нет ключа',revoked:'Ключ отозван'}[status];
           return '<tr data-employee="'+esc(e.id)+'"><td><div class="person">'+avatar(e)+'<div><span class="person-name">'+esc(e.name)+'</span><span class="person-email">'+esc(e.email)+'</span></div></div></td><td>'+
-            (key?'<span class="key-mask">'+icon('key')+'mox_demo_•••• '+esc(key.suffix)+'</span>':'<span class="no-key">Ключ ещё не выдан</span>')+'</td><td><span class="status status-'+status+'">'+label+'</span></td><td><span class="issued-date">'+(key?dateLabel(key.createdAt):'—')+'</span></td><td>'+
+            (key?'<span class="key-mask">'+icon('key')+'mox_demo_•••• '+esc(key.suffix)+'</span>':'<span class="no-key">Ключ ещё не выдан</span>')+'</td><td><span class="status status-'+status+'">'+label+'</span></td><td><button class="scope-link '+(!e.allowedConnectionIds.length?'scope-empty':'')+'" data-action="scope" data-id="'+esc(e.id)+'" aria-label="Настроить подписки: '+esc(e.name)+'">'+icon('layers')+(e.allowedConnectionIds.length?'Выбрано: '+e.allowedConnectionIds.length:'Не выбраны')+icon('chevron')+'</button></td><td>'+
             '<button class="row-action '+(active?'revoke':'issue')+'" data-action="'+(active?'revoke':'issue')+'" data-id="'+esc(e.id)+'" aria-label="'+(active?'Отозвать ключ: ':'Выдать ключ: ')+esc(e.name)+'">'+icon(active?'ban':'key')+(active?'Отозвать ключ':'Выдать ключ')+'</button></td></tr>';
         }).join('');
         $('empty-state').hidden=list.length>0;
         $('table-summary').textContent='Показано '+list.length+' из '+c.all;
       }
-      const eventTitles={added:'Сотрудник добавлен',issued:'Ключ выдан',reissued:'Новый ключ выдан',revoked:'Ключ отозван',checked:'Ключ проверен',started:'Демо-сессия начата'};
+      const eventTitles={added:'Сотрудник добавлен',issued:'Ключ выдан',reissued:'Новый ключ выдан',revoked:'Ключ отозван',checked:'Ключ проверен',started:'Демо-сессия начата',connected:'Подписка авторизована',disconnected:'Подписка отключена',connection_changed:'Состояние подписки изменено',scope_changed:'Доступ к подпискам изменён',routed:'Запрос направлен',route_blocked:'Запрос приостановлен'};
       function renderActivity(){
         $('activity-list').innerHTML=state.events.map(event=>{
           const e=employeeById(event.employeeId);
@@ -200,26 +225,56 @@
         }).join('');
       }
       function render(){
-        renderEmployees();renderActivity();
+        renderEmployees();renderConnections();renderActivity();
         if(lastCheckedHash)renderCheckResult(state.keys.find(k=>k.hash===lastCheckedHash));
+        refreshRouteResult();
+      }
+      function renderConnections(){
+        const total=state.connections.length,available=state.connections.filter(ready).length,authorized=state.connections.filter(c=>c.auth==='connected').length;
+        for(const id of ['environment-total','subscriptions-count','nav-subscriptions'])$(id).textContent=total;
+        $('environment-ready').textContent=available;$('subscriptions-ready').textContent=available;$('subscriptions-authorized').textContent=authorized;
+        $('connection-list').innerHTML=state.connections.map(c=>'<article class="connection-card" data-connection="'+esc(c.id)+'"><div class="connection-identity"><div class="provider-icon">'+icon('terminal')+'</div><div><div class="connection-title">'+esc(c.name)+'</div><div class="connection-email">'+esc(c.email)+' · Pro $200/мес.</div></div></div><div><div class="connection-label">Авторизация</div>'+authBadge(c)+'</div><div><div class="connection-label">Доступность</div>'+availabilityBadge(c)+'</div><div class="connection-actions">'+(c.auth!=='connected'?'<button class="btn btn-primary btn-small" data-action="reauthorize" data-id="'+esc(c.id)+'" aria-label="Авторизовать: '+esc(c.name)+'">Авторизовать</button>':'')+'<button class="btn btn-secondary btn-small" data-action="manage-connection" data-id="'+esc(c.id)+'" aria-label="Управлять: '+esc(c.name)+'">Управлять</button></div></article>').join('');
       }
       function setView(next){
         view=next;
-        for(const name of ['employees','codex','activity','check'])$(name+'-view').hidden=name!==view;
+        for(const name of ['employees','subscriptions','codex','activity','check'])$(name+'-view').hidden=name!==view;
         document.querySelectorAll('[data-view]').forEach(el=>{el.classList.toggle('active',el.dataset.view===view);if(el.dataset.view===view)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');});
-        $('breadcrumb').textContent={employees:'Сотрудники',codex:'Подключение Codex',activity:'История действий',check:'Проверка ключа'}[view];
+        $('breadcrumb').textContent={employees:'Сотрудники',subscriptions:'Подписки окружения',codex:'Подключение Codex',activity:'История действий',check:'Проверка ключа'}[view];
         document.title=$('breadcrumb').textContent+' · MOX ACCESS';
         if(view==='activity')renderActivity();
-        if(view==='check'&&lastCheckedHash)renderCheckResult(state.keys.find(k=>k.hash===lastCheckedHash));
+        if(view==='check'&&lastCheckedHash){renderCheckResult(state.keys.find(k=>k.hash===lastCheckedHash));refreshRouteResult();}
       }
       function openModal(body){
         revealedKey=null;modal.innerHTML=body;hydrate(modal);
         if(!modal.open)modal.showModal();
       }
-      function closeModal(){revealedKey=null;modal.close();modal.innerHTML='';}
+      function closeModal(){revealedKey=null;pendingConnection=null;modal.close();modal.innerHTML='';}
       function modalHead(title,subtitle){return '<div class="modal-head"><div><h2 id="modal-title">'+title+'</h2>'+(subtitle?'<p>'+subtitle+'</p>':'')+'</div><button class="close" data-action="close" aria-label="Закрыть">'+icon('x')+'</button></div>';}
+      function scopeOptions(selected){
+        return '<div class="scope-options">'+state.connections.map(c=>'<label class="scope-option"><input type="checkbox" name="connection" value="'+esc(c.id)+'" '+(selected.includes(c.id)?'checked':'')+'><span><strong>'+esc(c.name)+'</strong><small>'+esc(c.email)+'</small></span>'+availabilityBadge(c)+'</label>').join('')+'</div>';
+      }
+      function scopeModal(employeeId){
+        const e=employeeById(employeeId);if(!e)return;
+        openModal(modalHead('Доступные подписки',esc(e.name)+' · один ключ MOX для выбранных подписок.')+'<form id="scope-form" data-id="'+esc(e.id)+'"><div class="modal-body">'+scopeOptions(e.allowedConnectionIds)+'<div class="new-key-note">Новые подключения добавляются в доступ сотрудника отдельно. Снятие выбора остановит дальнейшие запросы в чатах на этой подписке. Сам ключ останется действующим.</div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-action="close">Отмена</button><button class="btn btn-primary" type="submit">Сохранить доступ</button></div></form>');
+      }
+      function connectModal(){
+        pendingConnection=null;
+        openModal(modalHead('Подключить подписку','Каждая подписка использует отдельную авторизацию.')+'<form id="connection-form" novalidate><div class="modal-body"><div class="field"><label for="connection-name">Название в MOX</label><input id="connection-name" maxlength="50" placeholder="Например, Pro для разработки" autofocus></div><div class="field"><label for="connection-email">Аккаунт подписки</label><input id="connection-email" type="email" maxlength="160" placeholder="team@example.com"><small>Демонстрационный аккаунт. В прототипе настоящий вход не выполняется.</small></div><div id="connection-error" class="error" role="alert" hidden></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-action="close">Отмена</button><button type="submit" class="btn btn-primary">Продолжить</button></div></form>');
+      }
+      function authModal(connection){
+        pendingConnection={...connection};
+        openModal(modalHead('Авторизовать подписку','Вход относится только к этому подключению.')+'<div class="modal-body"><div class="about-grid"><div><span>Подписка</span><strong>'+esc(connection.name)+'</strong></div><div><span>Аккаунт</span><strong>'+esc(connection.email)+'</strong></div><div><span>Тариф в демо</span><strong>Pro · $200 / месяц</strong></div></div><p class="hidden-state">Следующий шаг имитирует успешный вход в указанный аккаунт. Реальный OAuth и запросы к OpenAI здесь не выполняются.</p><div class="new-key-note">Повторный вход не заменяет ключи сотрудников и не восстанавливает исчерпанный лимит подписки.</div></div><div class="modal-footer"><button class="btn btn-secondary" data-action="close">Отмена</button><button class="btn btn-primary" data-action="confirm-auth">Подтвердить вход (демо)</button></div>');
+      }
+      function manageConnection(id){
+        const c=connectionById(id);if(!c)return;
+        openModal(modalHead(esc(c.name),esc(c.email))+'<div class="modal-body"><div class="about-grid"><div><span>Авторизация</span><strong>'+authLabels[c.auth]+'</strong></div><div><span>Состояние лимита</span><strong>'+(c.availability==='quota'?'Исчерпан':'Ограничение не задано в демо')+'</strong></div><div><span>Новые запросы</span><strong>'+(c.enabled?'Включены':'Приостановлены')+'</strong></div></div><div class="demo-control-buttons"><button class="btn btn-secondary btn-small" data-action="toggle-connection" data-id="'+esc(id)+'">'+(c.enabled?'Приостановить запросы':'Снять паузу')+'</button>'+(c.auth!=='connected'?'<button class="btn btn-primary btn-small" data-action="reauthorize" data-id="'+esc(id)+'">Авторизовать</button>':'')+(c.auth!=='disconnected'?'<button class="btn btn-danger-outline btn-small" data-action="disconnect" data-id="'+esc(id)+'">Отключить подписку</button>':'')+'</div><details class="demo-controls"><summary>Сценарии проверки</summary><div class="demo-control-buttons"><button class="btn btn-secondary btn-small" data-action="simulate-auth-expired" data-id="'+esc(id)+'">Истёк вход</button><button class="btn btn-secondary btn-small" data-action="simulate-quota" data-id="'+esc(id)+'">Лимит исчерпан</button><button class="btn btn-secondary btn-small" data-action="simulate-quota-restored" data-id="'+esc(id)+'">Лимит восстановлен</button></div><p class="hidden-state">Эти кнопки меняют только состояние демо.</p></details><div class="new-key-note">Начатые чаты остаются на этой подписке. Если она недоступна, новые запросы этих чатов приостанавливаются.</div></div><div class="modal-footer"><button class="btn btn-secondary" data-action="close">Готово</button></div>');
+      }
+      function disconnectModal(id){
+        const c=connectionById(id);if(!c)return;
+        openModal(modalHead('Отключить подписку?',esc(c.name))+'<div class="modal-body"><p class="modal-danger-text">Запросы к этому подключению остановятся. Другие разрешённые подписки останутся доступны сотрудникам для новых чатов. Ключи MOX менять не нужно.</p><div class="new-key-note">Чаты этой подписки не будут перенесены. Подключение сохраняется в списке для повторной авторизации того же аккаунта.</div></div><div class="modal-footer"><button class="btn btn-secondary" data-action="close">Отмена</button><button class="btn btn-danger" data-action="confirm-disconnect" data-id="'+esc(id)+'">Отключить подписку</button></div>');
+      }
       function addModal(){
-        openModal(modalHead('Добавить сотрудника','Доступ будет связан с его личным ключом MOX.')+'<form id="add-form" novalidate><div class="modal-body"><div class="field"><label for="employee-name">Имя и фамилия</label><input id="employee-name" name="name" autocomplete="off" maxlength="80" placeholder="Например, Иван Петров" autofocus></div><div class="field"><label for="employee-email">Рабочая почта</label><input id="employee-email" name="email" type="email" autocomplete="off" maxlength="160" placeholder="ivan@example.com"></div><label class="checkbox"><input id="issue-now" type="checkbox" checked>Сразу выдать API-ключ</label><div id="form-error" class="error" role="alert" hidden></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-action="close">Отмена</button><button type="submit" class="btn btn-primary" id="add-submit">Добавить сотрудника</button></div></form>');
+        openModal(modalHead('Добавить сотрудника','Доступ будет связан с его личным ключом MOX.')+'<form id="add-form" novalidate><div class="modal-body"><div class="field"><label for="employee-name">Имя и фамилия</label><input id="employee-name" name="name" autocomplete="off" maxlength="80" placeholder="Например, Иван Петров" autofocus></div><div class="field"><label for="employee-email">Рабочая почта</label><input id="employee-email" name="email" type="email" autocomplete="off" maxlength="160" placeholder="ivan@example.com"></div><div class="field"><label>Доступные подписки</label>'+scopeOptions(state.connections.filter(c=>c.auth!=='disconnected').map(c=>c.id))+'</div><label class="checkbox"><input id="issue-now" type="checkbox" checked>Сразу выдать API-ключ</label><div id="form-error" class="error" role="alert" hidden></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-action="close">Отмена</button><button type="submit" class="btn btn-primary" id="add-submit">Добавить сотрудника</button></div></form>');
       }
       function issueModal(employeeId){
         const e=employeeById(employeeId);if(!e)return;
@@ -252,22 +307,78 @@
       function renderCheckResult(key,empty=false){
         const active=key?.status==='active',e=key?employeeById(key.employeeId):null;
         const title=empty?'Введите API-ключ':active?'Демо-ключ активен':key?'Ключ отозван':'Ключ не найден';
-        const detail=empty?'Вставьте ключ, выданный в этой демо-сессии.':active?esc(e.name)+' · '+esc(e.email)+'<br>Сотрудник проходит локальную проверку доступа.':key?esc(e.name)+'<br>Доступ закрыт. Этот ключ больше не действует.':'Проверьте ключ. Ключи из другой вкладки или предыдущей демо-сессии здесь не действуют.';
-        $('check-result').innerHTML='<div class="check-result '+(active?'':'bad')+'"><div class="result-top">'+icon(active?'check':empty?'info':'ban')+title+'</div><div class="result-detail">'+detail+'</div><div class="result-code">'+(empty?'Локальная проверка':active?'Демо-ответ: 200 · доступ открыт':'Демо-ответ: 401 · доступ закрыт')+'</div></div>';
+        const detail=empty?'Вставьте ключ, выданный в этой демо-сессии.':active?esc(e.name)+' · '+esc(e.email)+'<br>Доступных подписок: '+eligibleConnections(e).length+' из '+e.allowedConnectionIds.length+'.':key?esc(e.name)+'<br>Доступ ко всем подпискам закрыт. Этот ключ больше не действует.':'Проверьте ключ. Ключи из другой вкладки или предыдущей демо-сессии здесь не действуют.';
+        $('check-result').innerHTML='<div class="check-result '+(active?'':'bad')+'"><div class="result-top">'+icon(active?'check':empty?'info':'ban')+title+'</div><div class="result-detail">'+detail+'</div><div class="result-code">'+(empty?'Локальная проверка':active?'Демо-ответ: 200 · ключ действителен':'Демо-ответ: 401 · доступ закрыт')+'</div></div>';
+        $('routing-panel').hidden=!active;
+        if(!active){$('route-result').innerHTML='';return;}
+        const previous=$('chat-select').value,chats=state.chats.filter(chat=>chat.employeeId===e.id);
+        $('chat-select').innerHTML='<option value="">Новый чат</option>'+chats.map(chat=>'<option value="'+esc(chat.id)+'">Чат '+chat.number+' · '+esc(connectionById(chat.connectionId)?.name||'Подписка недоступна')+'</option>').join('');
+        $('chat-select').value=chats.some(chat=>chat.id===previous)?previous:'';
+        if(lastRoute?.employeeId!==e.id){lastRoute=null;$('route-result').innerHTML='';}
+      }
+      function routeDecision(key,chatId){
+        if(!key||key.status!=='active')return {code:401,title:'Ключ не действует',detail:'Доступ закрыт ко всем подпискам окружения.'};
+        const e=employeeById(key.employeeId);
+        if(chatId){
+          const chat=state.chats.find(chat=>chat.id===chatId);
+          if(!chat||chat.employeeId!==e.id)return {code:403,title:'Чат недоступен',detail:'Чат должен принадлежать этому сотруднику.'};
+          const c=connectionById(chat.connectionId);
+          if(!e.allowedConnectionIds.includes(chat.connectionId))return {code:403,title:'Доступ к подписке отозван',detail:'Чат остаётся на своей подписке. Для продолжения нужен доступ администратора.',connection:c};
+          if(!c||c.auth!=='connected')return {code:503,title:'Подписка требует авторизации',detail:'Войдите в тот же аккаунт. Чат не будет перенесён на другую подписку.',connection:c};
+          if(!c.enabled)return {code:503,title:'Запросы приостановлены',detail:'Возобновите запросы этой подписки или начните отдельный новый чат.',connection:c};
+          if(c.availability==='quota')return {code:429,title:'Лимит подписки исчерпан',detail:'Дождитесь восстановления лимита. Этот чат остаётся на своей подписке.',connection:c};
+          return {code:200,connection:c,chat};
+        }
+        if(!e.allowedConnectionIds.length)return {code:403,title:'Подписки не назначены',detail:'Ключ действителен. Администратору нужно разрешить сотруднику хотя бы одну подписку.'};
+        const eligible=eligibleConnections(e);
+        if(!eligible.length)return {code:503,title:'Нет доступных подписок',detail:'Ключ действителен, но разрешённые подписки требуют входа, приостановлены или исчерпали лимит.'};
+        return {code:200,connection:eligible[(state.routingCursors[e.id]||0)%eligible.length]};
+      }
+      function refreshRouteResult(){
+        if(!lastRoute)return;
+        const key=state.keys.find(k=>k.hash===lastCheckedHash);
+        if(!key||key.status!=='active')return;
+        const decision=routeDecision(key,lastRoute.chatId||'');
+        const blocked=decision.code!==200;
+        const title=blocked?decision.title:lastRoute.code!==200?'Можно повторить проверку':'Запрос направлен';
+        const detail=blocked?decision.detail:lastRoute.code!==200?'Подписка снова доступна. Нажмите «Проверить запрос».':'Чат '+lastRoute.chatNumber+' закреплён за «'+esc(lastRoute.connectionName)+'». Запросов в чате: '+(state.chats.find(c=>c.id===lastRoute.chatId)?.requests||1)+'.';
+        $('route-result').innerHTML='<div class="route-result '+(blocked?'blocked':'')+'"><strong>'+title+'</strong><br>'+detail+(blocked&&decision.connection?'<br>Подписка: '+esc(decision.connection.name):'')+'<div class="result-code">'+(blocked?'Демо-ответ: '+decision.code:lastRoute.code===200?'Демо-ответ: 200':'Новый запрос ещё не отправлен')+'</div></div>';
+      }
+      async function simulateRequest(){
+        const generation=++checkGeneration,raw=$('check-key').value.trim(),selected=$('chat-select').value;
+        if(!raw)return;
+        const digest=await hash(raw);if(generation!==checkGeneration)return;
+        lastCheckedHash=digest;
+        const key=state.keys.find(k=>k.hash===digest);
+        const decision=routeDecision(key,selected);
+        let chat=decision.chat||state.chats.find(c=>c.id===selected);
+        if(decision.code===200){
+          if(!chat){chat={id:crypto.randomUUID(),number:state.chats.length+1,employeeId:key.employeeId,connectionId:decision.connection.id,requests:0};state.chats.push(chat);state.routingCursors[key.employeeId]=(state.routingCursors[key.employeeId]||0)+1;}
+          chat.requests++;
+          addEvent('routed',key.employeeId,'Чат '+chat.number+' · '+decision.connection.name+' · запрос '+chat.requests);
+        }else addEvent('route_blocked',key?.employeeId||null,decision.title);
+        lastRoute={employeeId:key?.employeeId,chatId:chat?.id||'',chatNumber:chat?.number,connectionName:decision.connection?.name||'',code:decision.code};
+        renderCheckResult(key);
+        if(chat)$('chat-select').value=chat.id;
+        refreshRouteResult();renderActivity();
       }
       async function seed(){
         checkGeneration++;
-        state={employees:[],keys:[],events:[]};
+        state=emptyState();
+        state.connections=[
+          {id:'connection-1',name:'Основная Pro',email:'primary@example.com',auth:'connected',availability:'available',enabled:true},
+          {id:'connection-2',name:'Командная Pro',email:'team@example.com',auth:'connected',availability:'available',enabled:true}
+        ];
         for(let i=0;i<people.length;i++){
           const [name,email,status]=people[i],employeeId='employee-'+i;
-          state.employees.push({id:employeeId,name,email,color:i});
+          state.employees.push({id:employeeId,name,email,color:i,allowedConnectionIds:state.connections.map(c=>c.id)});
           if(status!=='none'){
             const raw=makeRaw();
             state.keys.push({id:crypto.randomUUID(),employeeId,hash:await hash(raw),suffix:raw.slice(-4),createdAt:stamp(),status,revokedAt:status==='revoked'?stamp():null});
           }
         }
         addEvent('started',null);
-        filter='all';query='';lastCheckedHash=null;$('search').value='';$('check-key').value='';$('check-key').type='password';$('check-result').innerHTML='';
+        filter='all';query='';lastCheckedHash=null;lastRoute=null;pendingConnection=null;$('search').value='';$('check-key').value='';$('check-key').type='password';$('check-result').innerHTML='';$('routing-panel').hidden=true;$('route-result').innerHTML='';$('chat-select').innerHTML='<option value="">Новый чат</option>';
         const toggle=document.querySelector('[data-action="toggle-key"]');toggle.textContent='Показать ключ';
         setView('employees');render();
       }
@@ -279,6 +390,34 @@
         if(action==='add')addModal();
         if(action==='close')closeModal();
         if(action==='issue')issueModal(id);
+        if(action==='scope')scopeModal(id);
+        if(action==='connect')connectModal();
+        if(action==='reauthorize'){const c=connectionById(id);if(c)authModal(c);}
+        if(action==='manage-connection')manageConnection(id);
+        if(action==='disconnect')disconnectModal(id);
+        if(action==='confirm-disconnect'){
+          const c=connectionById(id);if(!c)return;
+          c.auth='disconnected';addEvent('disconnected',null,c.name+' · '+c.email);closeModal();render();toast('Подписка отключена. Ключи сотрудников сохранены');
+        }
+        if(action==='confirm-auth'){
+          if(!pendingConnection)return;
+          const draft=pendingConnection,existing=draft.id?connectionById(draft.id):null;
+          if(existing)existing.auth='connected';
+          else state.connections.push({id:crypto.randomUUID(),name:draft.name,email:draft.email,auth:'connected',availability:'available',enabled:true});
+          addEvent('connected',null,draft.name+' · '+draft.email);closeModal();render();setView('subscriptions');toast(existing?'Авторизация восстановлена в демо':'Подписка добавлена. Назначьте сотрудникам доступ');
+        }
+        if(action==='toggle-connection'){
+          const c=connectionById(id);if(!c)return;
+          c.enabled=!c.enabled;addEvent('connection_changed',null,c.name+' · '+(c.enabled?'Пауза снята':'Запросы приостановлены'));closeModal();render();
+        }
+        if(['simulate-auth-expired','simulate-quota','simulate-quota-restored'].includes(action)){
+          const c=connectionById(id);if(!c)return;
+          if(action==='simulate-auth-expired')c.auth='requires_auth';
+          if(action==='simulate-quota')c.availability='quota';
+          if(action==='simulate-quota-restored')c.availability='available';
+          addEvent('connection_changed',null,c.name+' · '+{'simulate-auth-expired':'Требуется вход','simulate-quota':'Лимит исчерпан','simulate-quota-restored':'Лимит восстановлен'}[action]);closeModal();render();
+        }
+        if(action==='route-request')await simulateRequest();
         if(action==='revoke')revokeModal(id);
         if(action==='confirm-revoke')revoke(id);
         if(action==='confirm-issue'){
@@ -301,14 +440,30 @@
           const input=$('check-key'),visible=input.type==='password';input.type=visible?'text':'password';el.textContent=visible?'Скрыть ключ':'Показать ключ';
         }
         if(action==='about'){
-          openModal(modalHead('Как работает доступ','Одна подписка компании, личный доступ для каждого сотрудника.')+'<div class="modal-body"><div class="about-grid"><div><span>Подписка</span><strong>Codex Pro · $200 / месяц</strong></div><div><span>Авторизация OpenAI</span><strong>На сервере компании</strong></div><div><span>Сотрудник получает</span><strong>Личный ключ MOX</strong></div><div><span>После отзыва</span><strong>Старый ключ не действует</strong></div></div><p class="hidden-state">В прототипе подключение показано для демонстрации. Выдача и отзыв действуют только в памяти этой страницы. Настоящий сервер и авторизация OpenAI не подключены.</p></div><div class="modal-footer"><button class="btn btn-secondary" data-action="close">Понятно</button></div>');
+          openModal(modalHead('Как работает доступ','Одно окружение MOX, несколько подписок и личные ключи сотрудников.')+'<div class="modal-body"><div class="about-grid"><div><span>Подключений</span><strong>'+state.connections.length+'</strong></div><div><span>Авторизация аккаунтов</span><strong>Отдельно для каждой подписки</strong></div><div><span>Сотрудник получает</span><strong>Один личный ключ MOX</strong></div><div><span>Новый чат</span><strong>Разрешённая доступная подписка</strong></div><div><span>Начатый чат</span><strong>Остаётся на своей подписке</strong></div></div><p class="hidden-state">В прототипе авторизация и маршрутизация моделируются. Настоящий сервер и подписки OpenAI не подключены.</p></div><div class="modal-footer"><button class="btn btn-secondary" data-action="close">Понятно</button></div>');
         }
         if(action==='reset'){
-          openModal(modalHead('Сбросить демо?','Вернём исходных десять сотрудников.')+'<div class="modal-body"><p class="modal-danger-text">Добавленные сотрудники, выданные ключи и история текущей сессии будут удалены. Скопированные демо-ключи перестанут действовать.</p></div><div class="modal-footer"><button class="btn btn-secondary" data-action="close">Отмена</button><button class="btn btn-primary" data-action="confirm-reset">Сбросить демо</button></div>');
+          openModal(modalHead('Сбросить демо?','Вернём десять сотрудников и две готовые подписки.')+'<div class="modal-body"><p class="modal-danger-text">Добавленные подписки, сотрудники, ключи, тестовые чаты и история будут удалены. Скопированные демо-ключи перестанут действовать.</p></div><div class="modal-footer"><button class="btn btn-secondary" data-action="close">Отмена</button><button class="btn btn-primary" data-action="confirm-reset">Сбросить демо</button></div>');
         }
         if(action==='confirm-reset'){if(busy)return;busy=true;closeModal();try{await seed();toast('Демо возвращено к исходному состоянию');}finally{busy=false;}}
       });
       document.addEventListener('submit',async event=>{
+        if(event.target.id==='connection-form'){
+          event.preventDefault();
+          const name=$('connection-name').value.trim(),email=$('connection-email').value.trim().toLowerCase();
+          let error='';
+          if(name.length<2)error='Укажите название подключения.';
+          else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))error='Укажите почту аккаунта.';
+          else if(state.connections.some(c=>c.email.toLowerCase()===email))error='Этот аккаунт уже добавлен. Используйте его повторную авторизацию.';
+          if(error){$('connection-error').textContent=error;$('connection-error').hidden=false;return;}
+          authModal({name,email});
+        }
+        if(event.target.id==='scope-form'){
+          event.preventDefault();
+          const e=employeeById(event.target.dataset.id);if(!e)return;
+          e.allowedConnectionIds=[...event.target.querySelectorAll('input[name="connection"]:checked')].map(input=>input.value).filter(id=>connectionById(id));
+          addEvent('scope_changed',e.id,e.allowedConnectionIds.map(id=>connectionById(id).name).join(', ')||'Подписки не назначены');closeModal();render();toast('Доступ к подпискам обновлён. Ключ сохранён');
+        }
         if(event.target.id==='add-form'){
           event.preventDefault();if(busy)return;
           const name=$('employee-name').value.trim().replace(/\s+/g,' '),email=$('employee-email').value.trim().toLowerCase(),withKey=$('issue-now').checked;
@@ -319,7 +474,7 @@
           if(error){$('form-error').textContent=error;$('form-error').hidden=false;return;}
           busy=true;$('add-submit').disabled=true;
           try{
-            const e={id:crypto.randomUUID(),name,email,color:state.employees.length};
+            const e={id:crypto.randomUUID(),name,email,color:state.employees.length,allowedConnectionIds:[...event.target.querySelectorAll('input[name="connection"]:checked')].map(input=>input.value)};
             state.employees.push(e);addEvent('added',e.id);
             filter='all';query='';$('search').value='';
             if(withKey){const raw=await issue(e.id);showKey(e.id,raw);}
@@ -336,12 +491,13 @@
           lastCheckedHash=digest;
           const key=state.keys.find(k=>k.hash===digest);
           renderCheckResult(key);
-          addEvent('checked',key?.employeeId||null,key?.status==='active'?'Доступ открыт':key?'Ключ отозван':'Ключ не найден');
+          addEvent('checked',key?.employeeId||null,key?.status==='active'?'Ключ действителен':key?'Ключ отозван':'Ключ не найден');
           renderActivity();
         }
       });
       $('search').addEventListener('input',event=>{query=event.target.value.trim().toLocaleLowerCase('ru');renderEmployees();});
-      $('check-key').addEventListener('input',()=>{checkGeneration++;lastCheckedHash=null;$('check-result').innerHTML='';});
+      $('check-key').addEventListener('input',()=>{checkGeneration++;lastCheckedHash=null;lastRoute=null;$('check-result').innerHTML='';$('route-result').innerHTML='';$('routing-panel').hidden=true;});
+      $('chat-select').addEventListener('change',()=>{checkGeneration++;lastRoute=null;$('route-result').innerHTML='';});
       modal.addEventListener('cancel',event=>{event.preventDefault();closeModal();});
       modal.addEventListener('close',()=>{revealedKey=null;});
       hydrate();seed();
