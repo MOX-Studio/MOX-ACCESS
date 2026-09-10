@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Вход через браузер · демонстрация MOX</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <style>
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f5f6fa;color:#293247;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;padding:28px}.card{width:min(440px,100%);background:#fff;border:1px solid #e3e7ef;border-radius:17px;padding:33px;box-shadow:0 6px 25px #27365305}.brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:34px}.brand strong{letter-spacing:-1px;font-size:23px;color:#202736}.badge{font-size:11px;letter-spacing:1px;background:#edf1fa;color:#7b88a4;padding:6px 9px;border-radius:5px}h1{font-size:25px;font-weight:620;letter-spacing:-.6px;margin:0 0 12px;line-height:1.25}p{font-size:14px;line-height:1.75;color:#8893a6;margin:0 0 26px}label{display:block;font-size:13px;font-weight:550;margin-bottom:10px;color:#5e6b82}select{width:100%;border:1px solid #dce3ee;background:#fff;border-radius:7px;padding:12px;font:inherit;font-size:14px;color:#40516e;outline:none}select:focus{border-color:#5274ed;box-shadow:0 0 0 3px #5274ed16}.account{margin:13px 0 23px;padding:13px 15px;border-radius:7px;background:#f8f9fc;color:#7d8aa2;font-size:13px;line-height:1.7}.button{display:block;width:100%;padding:13px 16px;font:inherit;font-size:14px;font-weight:550;border:0;border-radius:7px;cursor:pointer;background:#345feb;color:white}.button:hover{background:#2b51d3}.button:disabled{opacity:.5;cursor:default}.secondary{background:#fff;color:#7c889e;border:1px solid #e2e7f0;margin-top:10px}.secondary:hover{background:#f5f7fb}.note{border-top:1px solid #edf0f5;margin-top:26px;padding-top:19px;font-size:12px;line-height:1.8;color:#94a0b2}#status{font-size:13px;color:#9a7b44;margin:16px 0 0;line-height:1.6}.hidden,[hidden]{display:none!important}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand"><strong>MOX ACCESS</strong><span class="badge">ПРОТОТИП</span></div>
+    <h1>Вход через браузер</h1>
+    <p>В рабочем окружении здесь откроется страница OpenAI. Сейчас проверяется только сценарий перехода и возврата в MOX.</p>
+    <form id="demo-signin" hidden>
+      <label for="account">Демонстрационный аккаунт</label>
+      <select id="account"></select>
+      <div class="account" id="account-details"></div>
+      <button type="submit" class="button" id="submit">Завершить демо-вход</button>
+      <button type="button" class="button secondary" id="cancel">Отменить вход</button>
+    </form>
+    <div id="status" role="status" aria-live="polite">Получаем параметры демонстрации…</div>
+    <div class="note">Этот экран не принадлежит OpenAI и не запрашивает настоящие пароли. Все аккаунты в списке вымышлены.</div>
+  </main>
+  <script>
+    (() => {
+      const attemptId=new URLSearchParams(location.hash.slice(1)).get('attempt');
+      const openerWindow=window.opener;
+      let accounts=[],configured=false,finished=false;
+      const $=id=>document.getElementById(id);
+      function updateAccount(){
+        const account=accounts[Number($('account').value)];
+        $('account-details').textContent=account?account.email+' · '+({pro:'Pro',plus:'Plus',business:'Business',enterprise:'Enterprise'}[account.planType]||account.planType):'';
+      }
+      window.addEventListener('message',event=>{
+        const data=event.data;
+        if(configured||!openerWindow||event.source!==openerWindow||event.origin!==location.origin||!data||data.type!=='mox-auth-demo-config'||data.attemptId!==attemptId)return;
+        if(!Array.isArray(data.accounts)||!data.accounts.length)return;
+        accounts=data.accounts.filter(a=>a&&a.type==='chatgpt'&&typeof a.email==='string'&&typeof a.providerAccountId==='string'&&typeof a.workspaceId==='string'&&typeof a.planType==='string');
+        if(!accounts.length)return;
+        configured=true;
+        accounts.forEach((a,index)=>{const option=document.createElement('option');option.value=String(index);option.textContent=a.email;$('account').append(option);});
+        updateAccount();$('demo-signin').hidden=false;$('status').textContent='';
+      });
+      $('account').addEventListener('change',updateAccount);
+      $('demo-signin').addEventListener('submit',event=>{
+        event.preventDefault();if(finished||!configured)return;
+        if(!openerWindow||openerWindow.closed){$('status').textContent='Окно MOX закрыто. Начните вход заново из приложения.';return;}
+        const account=accounts[Number($('account').value)];if(!account)return;
+        finished=true;$('submit').disabled=true;$('status').textContent='Передаём результат в MOX…';
+        openerWindow.postMessage({type:'mox-auth-demo-result',attemptId,account},location.origin);
+        setTimeout(()=>{$('status').textContent='MOX не подтвердил завершение входа. Закройте это окно и начните вход заново.';$('cancel').textContent='Закрыть окно';},5000);
+      });
+      $('cancel').addEventListener('click',()=>{
+        if(openerWindow&&!openerWindow.closed)openerWindow.postMessage({type:'mox-auth-demo-cancel',attemptId},location.origin);
+        window.close();
+      });
+      if(openerWindow&&attemptId)openerWindow.postMessage({type:'mox-auth-demo-ready',attemptId},location.origin);
+      else $('status').textContent='Начните вход кнопкой «Подключить подписку» в MOX ACCESS.';
+      setTimeout(()=>{if(!configured)$('status').textContent='Не удалось связаться с окном MOX. Закройте это окно и начните вход заново.';},5000);
+    })();
+  </script>
+</body>
+</html>
