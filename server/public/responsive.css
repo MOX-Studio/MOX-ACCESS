@@ -186,6 +186,6 @@
 .guide-step details summary { cursor:pointer; color:#4e6593; font-size:14px; margin-top:4px; }
 .card .setup-note { font-size:13px; margin:16px 0 0; }
 .guide-step code { overflow-wrap:anywhere; }
-@media(max-width:1200px){.connection-guide{grid-template-columns:minmax(0,1fr)}.guide-summary{order:-1}.guide-summary .field{margin-bottom:0}}
+@media(max-width:1200px){.connection-guide{grid-template-columns:minmax(0,1fr)}.guide-summary{order:-1}}
 @media(max-width:600px){.guide-step{gap:10px}.guide-step .step-number{width:24px;height:24px}.guide-step h2{font-size:17px}.setup-code{padding:12px;font-size:12px}.guide-step .btn{white-space:normal;width:100%;min-height:44px}}
 @media(max-width:600px){.guide-client-switch{gap:8px}.guide-client{min-width:0;flex:1;padding:14px 12px}.guide-client strong{font-size:14px}.guide-client span{font-size:12px}}
