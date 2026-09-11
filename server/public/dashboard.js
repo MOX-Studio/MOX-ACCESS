@@ -49,6 +49,7 @@ function setMenu(open){const visible=mobileNav.matches&&open;document.body.class
 mobileNav.addEventListener('change',()=>setMenu(false));
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&document.body.classList.contains('menu-open'))setMenu(false);});
 function setView(next){setMenu(false);view=next;for(const name of ['employees','subscriptions','usage','codex','activity'])$(name+'-view').hidden=name!==view;document.querySelectorAll('[data-view]').forEach(el=>{el.classList.toggle('active',el.dataset.view===view);if(el.dataset.view===view)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');});$('breadcrumb').textContent={employees:'Сотрудники',subscriptions:'Подписки окружения',usage:'Расход токенов',codex:'Подключение API ключа',activity:'История действий'}[view];document.title=$('breadcrumb').textContent+' · MOX ACCESS';if(next==='usage')void loadUsage().catch(showError);}
+function setGuideClient(client){if(!['desktop','cli'].includes(client))return;document.querySelectorAll('[data-guide-client]').forEach(el=>{const active=el.dataset.guideClient===client;el.classList.toggle('active',active);el.setAttribute('aria-pressed',String(active));});document.querySelectorAll('[data-guide-only]').forEach(el=>{el.hidden=el.dataset.guideOnly!==client;});}
 function modalHead(title,subtitle=''){return '<div class="modal-head"><div><h2 id="modal-title">'+esc(title)+'</h2>'+(subtitle?'<p>'+esc(subtitle)+'</p>':'')+'</div><button class="close" data-action="close" aria-label="Закрыть">'+icon('x')+'</button></div>';}
 function openModal(body){revealedKey=null;modal.innerHTML=body;if(!modal.open)modal.showModal();}
 async function closeModal(cancel=true){authGeneration++;const previous=auth;auth=null;if(previous?.timer)clearTimeout(previous.timer);if(previous?.popup&&!previous.popup.closed)previous.popup.close();revealedKey=null;modal.close();modal.innerHTML='';if(cancel&&previous?.id)await api('/api/auth/attempts/'+previous.id,{method:'DELETE'});}
@@ -132,6 +133,7 @@ document.addEventListener('click',async event=>{
   try{
     $('mvp-error').hidden=true;
     if(el.dataset.view){setView(el.dataset.view);return;}
+    if(el.dataset.guideClient){setGuideClient(el.dataset.guideClient);return;}
     if(el.dataset.filter){filter=el.dataset.filter;renderEmployees();return;}
     if(el.dataset.period){usagePeriod=el.dataset.period;await loadUsage();return;}
     const action=el.dataset.action,id=el.dataset.id;

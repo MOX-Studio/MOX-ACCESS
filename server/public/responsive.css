@@ -171,6 +171,12 @@
 }
 
 .connection-guide { display:grid; grid-template-columns:minmax(0, 900px) minmax(240px, 340px); gap:24px; align-items:start; }
+.guide-client-switch { display:flex; gap:12px; margin:0 0 24px; }
+.guide-client { display:grid; gap:5px; min-width:210px; padding:16px 20px; text-align:left; border:1px solid var(--border); border-radius:8px; background:#fff; color:#62718b; cursor:pointer; }
+.guide-client strong { font-size:15px; font-weight:600; color:#384761; }
+.guide-client span { font-size:13px; }
+.guide-client.active { border-color:#7187b6; background:#eef2fb; box-shadow:inset 0 0 0 1px #7187b6; }
+.guide-client.active strong { color:#3e5482; }
 .guide-steps { display:grid; gap:16px; min-width:0; }
 .guide-step { display:flex; align-items:flex-start; gap:16px; }
 .guide-step > div { min-width:0; flex:1; }
@@ -182,3 +188,4 @@
 .guide-step code { overflow-wrap:anywhere; }
 @media(max-width:1200px){.connection-guide{grid-template-columns:minmax(0,1fr)}.guide-summary{order:-1}.guide-summary .field{margin-bottom:0}}
 @media(max-width:600px){.guide-step{gap:10px}.guide-step .step-number{width:24px;height:24px}.guide-step h2{font-size:17px}.setup-code{padding:12px;font-size:12px}.guide-step .btn{white-space:normal;width:100%;min-height:44px}}
+@media(max-width:600px){.guide-client-switch{gap:8px}.guide-client{min-width:0;flex:1;padding:14px 12px}.guide-client strong{font-size:14px}.guide-client span{font-size:12px}}
