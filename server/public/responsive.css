@@ -29,7 +29,6 @@
 .connection-actions { flex-wrap: wrap; justify-content: flex-end; }
 .connection-stats { flex-wrap: wrap; gap: 12px 28px; }
 .check-layout { grid-template-columns: minmax(0, 720px) minmax(0, 390px); }
-#check-view .check-layout { grid-template-columns: minmax(0, 720px); }
 .metric-detail { flex-wrap: wrap; gap: 6px 16px; }
 .usage-toolbar { gap: 12px 20px; flex-wrap: wrap; }
 .table-scroll { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
@@ -170,3 +169,16 @@
 @media (prefers-reduced-motion: reduce) {
   .sidebar { transition: none; }
 }
+
+.connection-guide { display:grid; grid-template-columns:minmax(0, 900px) minmax(240px, 340px); gap:24px; align-items:start; }
+.guide-steps { display:grid; gap:16px; min-width:0; }
+.guide-step { display:flex; align-items:flex-start; gap:16px; }
+.guide-step > div { min-width:0; flex:1; }
+.guide-step .step-number { margin-top:1px; }
+.guide-step h2 { line-height:1.4; }
+.setup-code { white-space:pre-wrap; overflow-wrap:anywhere; padding:16px; background:#f6f8fc; border:1px solid #e6eaf1; border-radius:7px; font:13px/1.7 ui-monospace,monospace; color:#53627d; }
+.guide-step details summary { cursor:pointer; color:#4e6593; font-size:14px; margin-top:4px; }
+.card .setup-note { font-size:13px; margin:16px 0 0; }
+.guide-step code { overflow-wrap:anywhere; }
+@media(max-width:1200px){.connection-guide{grid-template-columns:minmax(0,1fr)}.guide-summary{order:-1}.guide-summary .field{margin-bottom:0}}
+@media(max-width:600px){.guide-step{gap:10px}.guide-step .step-number{width:24px;height:24px}.guide-step h2{font-size:17px}.setup-code{padding:12px;font-size:12px}.guide-step .btn{white-space:normal;width:100%;min-height:44px}}

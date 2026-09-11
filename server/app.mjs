@@ -48,10 +48,6 @@ const server=createServer(async(req,res)=>{
       }
       let match=path.match(/^\/api\/employees\/([0-9a-f-]{36})\/(issue-key|revoke-key)$/);
       if(match&&req.method==='POST'){if(match[2]==='issue-key')return sendJson(res,201,{key:store.issueKey(match[1])});store.revokeKey(match[1]);return sendJson(res,200,{ok:true});}
-      if(path==='/api/check-key'&&req.method==='POST'){
-        const body=await readJson(req,{limit:4096,signal:AbortSignal.timeout(15000)}),key=store.checkKey(body.key);const employee=key?store.employees().find(e=>e.id===key.employeeId):null;
-        return sendJson(res,200,{status:key?.status||'not_found',employee,available:store.readyConnections().length,total:store.connections().length});
-      }
       if(path==='/api/auth/active'&&req.method==='GET')return sendJson(res,200,accounts.active?accounts.public(accounts.active):null);
       if(path==='/api/auth/attempts'&&req.method==='POST'){const body=await readJson(req,{limit:4096,signal:AbortSignal.timeout(15000)});return sendJson(res,201,await accounts.start(body.connectionId||null,body.method||'browser'));}
       match=path.match(/^\/api\/auth\/attempts\/([0-9a-f-]{36})\/open$/);
