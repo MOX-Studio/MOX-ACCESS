@@ -74,7 +74,7 @@ function countInto(total, event) {
   else { total.output += event.outputTokens; total.outputKnown++; }
   if (event.inputTokens === null || event.outputTokens === null) total.incompleteRequests++;
 }
-export function aggregateUsage(employees, records, period = 'day', now = Date.now()) {
+export function aggregateUsage(employees, records, period = 'day', now = Date.now(), modeField = 'effectiveMode') {
   const range = periodRange(period, now), totals = groupedTotals(), seen = new Set();
   const rows = new Map(employees.map(employee => [employee.id, { employee, ...groupedTotals() }]));
   for (const event of records) {
@@ -83,7 +83,7 @@ export function aggregateUsage(employees, records, period = 'day', now = Date.no
     if (!rows.has(event.employeeId)) {
       rows.set(event.employeeId, { employee: { id: event.employeeId, name: 'Архивный сотрудник', email: '', color: 0 }, ...groupedTotals() });
     }
-    const mode = ['standard', 'fast'].includes(event.effectiveMode) ? event.effectiveMode : 'unknown';
+    const mode = ['standard', 'fast'].includes(event[modeField]) ? event[modeField] : 'unknown';
     const row = rows.get(event.employeeId);
     countInto(totals, event);
     countInto(totals.byMode[mode], event);

@@ -6,3 +6,14 @@ node_modules/
 tmp/
 artifacts/
 *.log
+
+.mox/
+mvp-data/
+*.sqlite
+*.sqlite-*
+
+# Private MVP state, including custom development folders.
+profiles/
+auth.json
+admin-password.txt
+*.key
